@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- read the log path from application.properties if not exist use defaultValue -->
+    <springProperty scope="context" name="logPath" source="logging.file.path"
+        defaultValue="/tmp/logs" />
+
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- set the log format -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - [%thread] %-5level %logger{35} -%kvp- %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- dcbot log -->
+    <appender name="EVENT_LISTENER_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/dcbot.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- log rolling -->
+            <fileNamePattern>${logPath}/dcbot-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- set the log format -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - [%thread] %-5level %logger{35} -%kvp- %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- dcbot logger -->
+    <logger name="com.example.dcbot.Bc.EventListener" additivity="false">
+        <appender-ref ref="EVENT_LISTENER_LOG" />
+    </logger>
+
+    <root>
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
