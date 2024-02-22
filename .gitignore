@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+.mvn/
+bin/
+logPath_IS_UNDEFINED/
+
+nohup.out
+application-test.properties
+application.properties
