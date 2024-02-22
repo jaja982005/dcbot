@@ -8,15 +8,15 @@ import reactor.core.publisher.Mono;
 
 public interface EventListener<T extends Event> {
 
-    Logger dcEventListenerLogger = LoggerFactory.getLogger(EventListener.class);
+    Logger dcrunlog = LoggerFactory.getLogger("BotRunLogger");
 
     Class<T> getEventType();
 
     Mono<Void> execute(T event);
 
     default Mono<Void> handleError(Throwable error) {
-
-        dcEventListenerLogger.error("Unable to process " + getEventType().getSimpleName(), error);
+        String errorMsg = "Unable to process " + getEventType().getSimpleName();
+        dcrunlog.error(errorMsg, error);
 
         return Mono.empty();
 
