@@ -46,7 +46,7 @@
     </appender>
 
     <!-- root setting -->
-    <root level="TRACE">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="APPLICATION_LOG" />
     </root>
@@ -57,7 +57,7 @@
     </logger>
 
     <!-- Exception Logger -->
-    <logger name="exceptionLogger" level="WARN" additivity="false">
+    <logger name="exceptionLogger" level="WARN" additivity="true">
         <appender-ref ref="EXCEPTION_LOG" />
     </logger>
 
