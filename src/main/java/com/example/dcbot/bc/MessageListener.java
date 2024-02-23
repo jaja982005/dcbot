@@ -16,9 +16,11 @@ public abstract class MessageListener {
     public Mono<Void> processCommand(Message eventMessage) {
         return Mono.just(eventMessage)
                 .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
+                // get the member information
                 .flatMap(message -> message.getAuthorAsMember())
                 .flatMap(member -> {
                     String content = eventMessage.getContent();
+                    // get the user display name
                     String userName = member.getDisplayName();
                     String httpsPattern = "^https://.*";
 
@@ -31,7 +33,6 @@ public abstract class MessageListener {
                             Snowflake msgId = eventMessage.getId();
                             String greet = messageSource.getMessage(Const.X_URL_REPLACE_SUCCESS,
                                     new String[] { userName }, null);
-                            System.out.println(greet);
                             StringBuilder replyStb = new StringBuilder();
                             replyStb.append(greet);
                             replyStb.append("\n");
