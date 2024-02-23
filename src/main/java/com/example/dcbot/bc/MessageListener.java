@@ -16,17 +16,19 @@ public abstract class MessageListener {
     public Mono<Void> processCommand(Message eventMessage) {
         return Mono.just(eventMessage)
                 .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                .flatMap(message -> {
-                    String content = message.getContent();
-                    String userName = message.getAuthor().get().getUsername();
+                .flatMap(message -> message.getAuthorAsMember())
+                .flatMap(member -> {
+                    String content = eventMessage.getContent();
+                    String userName = member.getDisplayName();
                     String httpsPattern = "^https://.*";
+
                     if (content.matches(httpsPattern)) {
                         XUrlReplaceService service = new XUrlReplaceService();
                         String replacedUrl = service.vxTwitterBuilder(userName, content);
-                        if (replacedUrl.equals("")) {
+                        if (replacedUrl.isEmpty()) {
                             return Mono.empty();
                         } else {
-                            Snowflake msgId = message.getId();
+                            Snowflake msgId = eventMessage.getId();
                             String greet = messageSource.getMessage(Const.X_URL_REPLACE_SUCCESS,
                                     new String[] { userName }, null);
                             System.out.println(greet);
@@ -34,7 +36,7 @@ public abstract class MessageListener {
                             replyStb.append(greet);
                             replyStb.append("\n");
                             replyStb.append(replacedUrl);
-                            return message.getChannel()
+                            return eventMessage.getChannel()
                                     .flatMap(channel -> channel.createMessage(replyStb.toString())
                                             .withMessageReference(msgId));
                         }
@@ -42,7 +44,6 @@ public abstract class MessageListener {
                     return Mono.empty();
                 })
                 .then();
-
     }
 
 }
