@@ -2,6 +2,7 @@ package com.example.dcbot.bc;
 
 import com.example.dcbot.Service.XUrlRebuilder;
 
+import discord4j.common.util.Snowflake;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
 
@@ -19,7 +20,9 @@ public abstract class MessageListener {
                         if (reply.equals("")) {
                             return Mono.empty();
                         } else {
-                            return message.getChannel().flatMap(channel -> channel.createMessage(reply));
+                            Snowflake msgId = message.getId();
+                            return message.getChannel()
+                                    .flatMap(channel -> channel.createMessage(reply).withMessageReference(msgId));
                         }
                     }
                     return Mono.empty();
