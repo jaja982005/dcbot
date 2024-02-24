@@ -14,6 +14,11 @@ import reactor.core.publisher.Mono;
 @Service
 public class MessageCreateListener extends MessageListener implements EventListener<MessageCreateEvent> {
 
+    public MessageCreateListener(XUrlReplaceService service) {
+        super(service);
+        // TODO Auto-generated constructor stub
+    }
+
     @Override
 
     public Class<MessageCreateEvent> getEventType() {

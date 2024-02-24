@@ -12,6 +12,10 @@ import reactor.core.publisher.Mono;
 
 public class MessageUpdateListener extends MessageListener implements EventListener<MessageUpdateEvent> {
 
+    public MessageUpdateListener(XUrlReplaceService service) {
+        super(service);
+    }
+
     @Override
 
     public Class<MessageUpdateEvent> getEventType() {

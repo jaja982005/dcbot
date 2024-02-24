@@ -2,11 +2,18 @@ package com.example.dcbot.Service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import lombok.NoArgsConstructor;
+
 @Service
+@NoArgsConstructor
 public class XUrlReplaceService {
     Logger botrunlog = LoggerFactory.getLogger("BotRunLogger");
+    @Autowired
+    protected MessageSource messageSource;
 
     public String vxTwitterBuilder(String userName, String target) {
         String result = "";
@@ -15,14 +22,6 @@ public class XUrlReplaceService {
         } else if (target.contains("https://twitter.com")) {
             result = target.replaceFirst("twitter.com", "vxtwitter.com");
         }
-        if (!result.equals("")) {
-            StringBuilder logMsgStb = new StringBuilder();
-            logMsgStb.append(userName);
-            logMsgStb.append(" : ");
-            logMsgStb.append(target);
-            botrunlog.info(logMsgStb.toString());
-        }
-
         return result;
     }
 }
