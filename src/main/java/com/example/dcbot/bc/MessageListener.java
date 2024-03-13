@@ -32,7 +32,9 @@ public abstract class MessageListener {
                     // get the user display name
                     String userName = member.getDisplayName();
                     String httpsPattern = "^https://.*";
-
+                    if (!content.contains("/status/")) {
+                        return Mono.empty();
+                    }
                     if (content.matches(httpsPattern)) {
                         // XUrlReplaceService service = new XUrlReplaceService();
                         String replacedUrl = service.vxTwitterBuilder(userName, content);
