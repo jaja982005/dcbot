@@ -10,9 +10,9 @@ import reactor.core.publisher.Mono;
 
 @Service
 
-public class MessageUpdateListener extends XUrlListener implements EventListener<MessageUpdateEvent> {
+public class XUrlMessageUpdateListener extends XUrlListener implements EventListener<MessageUpdateEvent> {
 
-    public MessageUpdateListener(XUrlReplaceService service) {
+    public XUrlMessageUpdateListener(XUrlReplaceService service) {
         super(service);
     }
 

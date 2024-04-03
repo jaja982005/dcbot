@@ -12,9 +12,9 @@ import reactor.core.publisher.Mono;
  * service for chanel has new message
  */
 @Service
-public class MessageCreateListener extends XUrlListener implements EventListener<MessageCreateEvent> {
+public class XUrlMessageCreateListener extends XUrlListener implements EventListener<MessageCreateEvent> {
 
-    public MessageCreateListener(XUrlReplaceService service) {
+    public XUrlMessageCreateListener(XUrlReplaceService service) {
         super(service);
 
     }
