@@ -11,14 +11,14 @@ import discord4j.common.util.Snowflake;
 import discord4j.core.object.entity.Message;
 import reactor.core.publisher.Mono;
 
-public abstract class MessageListener {
+public abstract class XUrlListener {
     @Autowired
     protected MessageSource messageSource;
 
     private final XUrlReplaceService service;
     Logger botrunlog = LoggerFactory.getLogger("BotRunLogger");
 
-    public MessageListener(XUrlReplaceService service) {
+    public XUrlListener(XUrlReplaceService service) {
         this.service = service;
     }
 

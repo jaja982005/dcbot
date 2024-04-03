@@ -3,14 +3,14 @@ package com.example.dcbot.Service;
 import org.springframework.stereotype.Service;
 
 import com.example.dcbot.bc.EventListener;
-import com.example.dcbot.bc.MessageListener;
+import com.example.dcbot.bc.XUrlListener;
 
 import discord4j.core.event.domain.message.MessageUpdateEvent;
 import reactor.core.publisher.Mono;
 
 @Service
 
-public class MessageUpdateListener extends MessageListener implements EventListener<MessageUpdateEvent> {
+public class MessageUpdateListener extends XUrlListener implements EventListener<MessageUpdateEvent> {
 
     public MessageUpdateListener(XUrlReplaceService service) {
         super(service);
