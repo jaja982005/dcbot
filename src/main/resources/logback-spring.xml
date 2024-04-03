@@ -57,7 +57,7 @@
     </logger>
 
     <!-- Exception Logger -->
-    <logger name="exceptionLogger" level="WARN" additivity="true">
+    <logger name="exceptionLogger" level="WARN">
         <appender-ref ref="EXCEPTION_LOG" />
     </logger>
 

@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 
 public interface EventListener<T extends Event> {
 
-    Logger dcrunlog = LoggerFactory.getLogger("BotRunLogger");
+    Logger dcrunlog = LoggerFactory.getLogger("exceptionLogger");
 
     Class<T> getEventType();
 

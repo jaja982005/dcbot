@@ -44,6 +44,7 @@ public abstract class XUrlListener {
                         } else {
                             Snowflake msgId = eventMessage.getId();
                             // create the reply content
+                            @SuppressWarnings("null")
                             String greet = messageSource.getMessage(Const.X_URL_REPLACE_SUCCESS,
                                     new String[] { userName }, null);
                             StringBuilder replyStb = new StringBuilder();
