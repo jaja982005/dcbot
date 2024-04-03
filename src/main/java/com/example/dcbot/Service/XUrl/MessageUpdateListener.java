@@ -1,4 +1,4 @@
-package com.example.dcbot.Service;
+package com.example.dcbot.Service.XUrl;
 
 import org.springframework.stereotype.Service;
 
