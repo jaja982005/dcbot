@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
+import com.example.dcbot.Service.Command.CommandService;
 import com.example.dcbot.Service.XUrl.XUrlReplaceService;
 import com.example.dcbot.bc.Const;
 
@@ -17,10 +18,14 @@ public abstract class XUrlListener {
     protected MessageSource messageSource;
 
     private final XUrlReplaceService service;
+    private final CommandService commandService;
+
     Logger botrunlog = LoggerFactory.getLogger("BotRunLogger");
 
-    public XUrlListener(XUrlReplaceService service) {
+    public XUrlListener(XUrlReplaceService service, CommandService commandService) {
         this.service = service;
+        this.commandService = commandService;
+
     }
 
     public Mono<Void> processCommand(Message eventMessage) {
@@ -29,7 +34,13 @@ public abstract class XUrlListener {
                 // get the member information
                 .flatMap(message -> message.getAuthorAsMember())
                 .flatMap(member -> {
+
                     String content = eventMessage.getContent();
+                    // check the bot is enbale in this chat
+                    String channelId = eventMessage.getChannelId().asString();
+                    if (!commandService.isEnbale(channelId)) {
+                        return Mono.empty();
+                    }
                     // get the user display name
                     String userName = member.getDisplayName();
                     String httpsPattern = "^https://.*";
@@ -54,6 +65,8 @@ public abstract class XUrlListener {
 
                             // log the message if it success
                             StringBuilder logMsgStb = new StringBuilder();
+                            logMsgStb.append(channelId);
+                            logMsgStb.append(" - ");
                             logMsgStb.append(userName);
                             logMsgStb.append(" : ");
                             logMsgStb.append(content);

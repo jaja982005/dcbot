@@ -7,7 +7,6 @@ import org.springframework.context.MessageSource;
 
 import com.example.dcbot.DTO.CommandResult;
 import com.example.dcbot.Service.Command.CommandService;
-import com.example.dcbot.bc.Const;
 
 import discord4j.common.util.Snowflake;
 import discord4j.core.object.entity.Message;
@@ -29,17 +28,28 @@ public abstract class CommandListener {
                 .flatMap(message -> message.getAuthorAsMember())
                 .flatMap(member -> {
                     String content = eventMessage.getContent();
+
+                    // check the bot is enbale in this chat
+                    String channelId = eventMessage.getChannelId().asString();
+                    if (!content.startsWith("!enableBot") && !content.startsWith("!help")) {
+                        if (!service.isEnbale(channelId)) {
+                            return Mono.empty();
+                        }
+                    }
+
                     if (content.startsWith("!")) {
 
                         Snowflake msgId = eventMessage.getId();
+                        String userName = member.getDisplayName();
 
-                        CommandResult responseString = service.dcBotCommand(content);
-                        if (responseString.getResult()
-                                && responseString.getcommand().getActive().equals(Const.RESPONSE_COMMAND)) {
+                        CommandResult responseString = service.dcBotCommand(channelId, userName, content);
+                        if (responseString.getResult()) {
                             String greet = responseString.getcommand().getContent();
+
                             // log the message if it success
                             StringBuilder logMsgStb = new StringBuilder();
-                            String userName = member.getDisplayName();
+                            logMsgStb.append(channelId);
+                            logMsgStb.append(" - ");
                             logMsgStb.append(userName);
                             logMsgStb.append(" : ");
                             logMsgStb.append(content);
