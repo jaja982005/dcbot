@@ -1,4 +1,4 @@
-The Discord BOT with spring boot.  
+The Discord Bot with spring boot.  
 This Bot will help you to make the x (twitter) url to vxtwitter url.  
 
 Command List:  
