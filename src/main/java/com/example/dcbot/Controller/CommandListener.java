@@ -47,13 +47,8 @@ public abstract class CommandListener {
                             String greet = responseString.getcommand().getContent();
 
                             // log the message if it success
-                            StringBuilder logMsgStb = new StringBuilder();
-                            logMsgStb.append(channelId);
-                            logMsgStb.append(" - ");
-                            logMsgStb.append(userName);
-                            logMsgStb.append(" : ");
-                            logMsgStb.append(content);
-                            botrunlog.info(logMsgStb.toString());
+                            String logMsg = channelId + " - " + userName + " : " + content;
+                            botrunlog.info(logMsg);
 
                             return eventMessage.getChannel()
                                     .flatMap(channel -> channel.createMessage(greet).withMessageReference(msgId));

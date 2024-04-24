@@ -58,23 +58,16 @@ public abstract class XUrlListener {
                             @SuppressWarnings("null")
                             String greet = messageSource.getMessage(Const.X_URL_REPLACE_SUCCESS,
                                     new String[] { userName }, null);
-                            StringBuilder replyStb = new StringBuilder();
-                            replyStb.append(greet);
-                            replyStb.append("\n");
-                            replyStb.append(replacedUrl);
+
+                            String replyStr = greet + "\n" + replacedUrl;
 
                             // log the message if it success
-                            StringBuilder logMsgStb = new StringBuilder();
-                            logMsgStb.append(channelId);
-                            logMsgStb.append(" - ");
-                            logMsgStb.append(userName);
-                            logMsgStb.append(" : ");
-                            logMsgStb.append(content);
-                            botrunlog.info(logMsgStb.toString());
+                            String logMsg = channelId + " - " + userName + " : " + content;
+                            botrunlog.info(logMsg);
 
                             // reply the replaced url
                             return eventMessage.getChannel()
-                                    .flatMap(channel -> channel.createMessage(replyStb.toString())
+                                    .flatMap(channel -> channel.createMessage(replyStr)
                                             .withMessageReference(msgId));
                         }
                     }
